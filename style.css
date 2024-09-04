@@ -149,6 +149,7 @@ body.dark-mode .article {
   padding: 8px 10px;
   border-radius: 5px;
   cursor: pointer;
+  color: var(--background-dark);
   background-color: var(--light-grey);
 }
 
