@@ -2,10 +2,12 @@
 const navbarHTML = `
   <header>
     <nav class="navbar">
-        <div class="mode">
-            <a href="javascript:void(0);" class="darkmode-button" onclick="toggleDarkMode()">
-                <i class='bx bx-moon'></i>
-            </a>
+        <div class="navbar-content">
+            <div class="filters">
+                <button onclick="filterArticles('All')">Tous</button>
+                <button onclick="filterArticles('Web Design')">Web Design</button>
+                <button onclick="filterArticles('Programmation')">Programmation</button>
+            </div>
         </div>
     </nav>
   </header>
@@ -15,47 +17,10 @@ const navbarHTML = `
 /* Avec afterbegin le contenu est inséré juste après l'ouverture de la balise <body>*/
 document.body.insertAdjacentHTML('afterbegin', navbarHTML);
 
-// fonction darkmode
-function toggleDarkMode() {
-    // on récupère le body
-    var body = document.body;
-
-    // on récupère le button
-    var darkModeIcon = document.querySelector('.darkmode-button i');
-
-    // bascule entre les classes dark-mode 
-    body.classList.toggle('dark-mode');
-
-    // mise à jour de la classe sur la navbar
-    // on récupère la navbar
-    var navbar = document.querySelector('.navbar');
-
-    // cette méthode vérifie si l'élément body contient déjà la classe dark-mode.
-    navbar.classList.toggle('dark-mode', body.classList.contains('dark-mode'));
-
-    // mise à jour des articles en darkmode
-    var articles = document.querySelectorAll('.article');
-    articles.forEach((article) => {
-        article.classList.remove('dark-mode');
-    });
-
-    // changement de l'icône en fonction du mode
-    if (body.classList.contains('dark-mode')) {
-        darkModeIcon.classList.replace('bx-moon', 'bx-sun');
-    } else {
-        darkModeIcon.classList.replace('bx-sun', 'bx-moon');
-    }
-}
-
 // création des boutons de filtre
 const filterButtonsHTML = `
     <main>
         <!-- Filtres -->
-        <div class="filters">
-            <button onclick="filterArticles('All')">Tous</button>
-            <button onclick="filterArticles('Web Design')">Web Design</button>
-            <button onclick="filterArticles('Programmation')">Programmation</button>
-        </div>
         <div class="gallery">
             <!-- Les articles -->
         </div>
@@ -65,51 +30,80 @@ const filterButtonsHTML = `
 // ajouter les boutons de filtre et le conteneur pour la galerie sous la navbar
 document.body.insertAdjacentHTML('beforeend', filterButtonsHTML);
 
-// création les articles (le titre, l'image, la description, la catégorie et la duree)
+// création les articles (le titre, la description, la catégorie et la duree)
 const articles = [
     {
         titre: "Les bases de HTML",
-        image: "../assets/images/html.jpg",
         description: "Apprenez les bases du langage HTML.",
         categorie: "Web Design",
         duree: "8 min",
     },
     {
         titre: "Introduction au CSS",
-        image: "../assets/images/css.jpg",
         description: "Comprenez comment styliser vos pages web avec CSS.",
         categorie: "Web Design",
         duree: "12 min",
     },
     {
-        titre: "JavaScript pour les débutants",
-        image: "../assets/images/JS.jpg",
-        description: "Découvrez les concepts fondamentaux de JavaScript.",
-        categorie: "Programmation",
-        duree: "15 min",
-    },
-    {
         titre: "Responsive Design avec Flexbox",
-        image: "../assets/images/responsive.png",
         description: "Apprenez à créer des mises en page avec Flexbox.",
         categorie: "Web Design",
         duree: "10 min",
     },
     {
-        titre: "Manipulation du DOM avec JavaScript",
-        image: "../assets/images/dom.jpeg",
+        titre: "Animations CSS avancées",
+        description: "Créez des animations modernes avec CSS.",
+        categorie: "Web Design",
+        duree: "15 min",
+    },
+    {
+        titre: "Design avec Grid Layout",
+        description: "Maîtrisez la mise en page CSS Grid pour vos sites.",
+        categorie: "Web Design",
+        duree: "18 min",
+    },
+    {
+        titre: "Optimisation SEO d'un site web",
+        description: "Apprenez les bases du référencement pour améliorer la visibilité de vos sites.",
+        categorie: "Web Design",
+        duree: "12 min",
+    },
+    {
+        titre: "JavaScript pour les débutants",
+        description: "Découvrez les concepts fondamentaux de JavaScript.",
+        categorie: "Programmation",
+        duree: "15 min",
+    },
+    {
+        titre: "Le DOM avec JavaScript",
         description: "Découvrez comment interagir avec le DOM en JS.",
         categorie: "Programmation",
         duree: "20 min",
     },
     {
-        titre: "Manipulation du DOM avec React",
-        image: "../assets/images/react.png",
+        titre: "Manipulation du DOM",
         description: "Apprenez à manipuler le DOM avec React.",
         categorie: "Programmation",
         duree: "30 min",
+    },
+    {
+        titre: "Introduction à Node.js",
+        description: "Apprenez les bases du développement côté serveur avec Node.js.",
+        categorie: "Programmation",
+        duree: "25 min",
+    },
+    {
+        titre: "ES6 et JavaScript moderne",
+        description: "Découvrez les nouvelles fonctionnalités de JavaScript ES6+.",
+        categorie: "Programmation",
+        duree: "22 min",
+    },
+    {
+        titre: "Programmation asynchrone",
+        description: "Apprenez à gérer les promesses et async/await en JS.",
+        categorie: "Programmation",
+        duree: "28 min",
     }
-    
 ];
 
 // on récupère la div gallery
@@ -120,11 +114,14 @@ const gallery = document.querySelector('.gallery');
 articles.forEach((article) => {
     const html = `
       <div class="article" data-categorie="${article.categorie}">
-        <img src="${article.image}" alt="${article.titre}">
-        <h2>${article.titre}</h2>
-        <p>${article.description}</p>
-        <div class="categorie">${article.categorie}</div>
-        <div class="duree">${article.duree}</div>
+        <div class="titre">
+            <h2>${article.titre}</h2>
+            <p>${article.description}</p>
+        </div>
+        <div class="infos-container">
+            <div class="infos">${article.categorie}</div>
+            <div class="infos">${article.duree}</div>
+        </div>
       </div>
     `;
     // on insère le code HTML (c'est à dire l'article) dans la div gallery
@@ -144,7 +141,7 @@ function filterArticles(categorie) {
             article.getAttribute("data-categorie") === categorie
         ) {
             // affiche l'article si la condition est vraie
-            article.style.display = "block";
+            article.style.display = "flex";
         } else {
             // cache l'article si la condition est fausse
             article.style.display = "none";
