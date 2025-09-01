@@ -33,7 +33,7 @@ body {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  height: fit-content;
+  height: 100dvh;
   background-color: var(--background-dark);
   color: var(--white);
   line-height: 1.5;
@@ -204,6 +204,10 @@ body {
   .filters button {
     padding: 8px 15px;
   }
+  body {
+  height: fit-content;
+}
+
 }
 
 @media (max-width: 380px) {
